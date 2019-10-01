@@ -19,7 +19,7 @@ let enemy = {
   height: 30,
   speed: 5,
   vx: -3,
-  vy: 0
+  vy: 2
 }
 
 function setup() {
@@ -33,11 +33,20 @@ function draw() {
   fill("blue")
   rect(player.x, player.y, player.width, player.height)
   
-  if (enemy.x > 300) {
+  if (enemy.x > 335) {
      fill("red") 
   }
-  else if (enemy.x > 200) {
+  else if (enemy.x > 269) {
       fill("orange")
+  }
+  else if (enemy.x > 203) {
+      fill("yellow")
+  }
+  else if (enemy.x > 148) {
+      fill("green")
+  }
+  else if (enemy.x > 65) {
+      fill("blue")
   }
   //yellow, green, blue
   else {
@@ -49,8 +58,17 @@ function draw() {
   player.y += player.vy
   enemy.x += enemy.vx
   enemy.y += enemy.vy
-  //fill("green")
-  //circle(mouseX, mouseY, 30)
+  
+  //call wallBounce()
+  wallBounce()
+}
+
+//Define wallBounce
+function wallBounce() {
+  if (enemy.x < 0) {
+      enemy.vx = -enemy.vx
+  }
+  
 }
 
 function keyPressed() {
