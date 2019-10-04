@@ -13,18 +13,18 @@ let player = {
 }
 
 let enemy = {
-  x: 400,
-  y: 10,
+  x: 350,
+  y: 30,
   width: 50,
-  height: 30,
+  height: 50,
   speed: 5,
-  vx: -3,
-  vy: 2
+  vx: -7,
+  vy: 5
 }
 
 function setup() {
   createCanvas(400, 400);
-  frameRate(24)
+  frameRate(100)
 }
 
 function draw() {
@@ -53,20 +53,40 @@ function draw() {
     fill("purple")
   }
     
-  circle(enemy.x, enemy.y, enemy.width, enemy.height)
+  circle(enemy.x, enemy.y, enemy.width)
   player.x += player.vx
   player.y += player.vy
   enemy.x += enemy.vx
   enemy.y += enemy.vy
   
+  if (collide(player,enemy) == true) {
+    console.log( "hit" )
+  }
+  
   //call wallBounce()
   wallBounce()
 }
 
+function collide(player1, player2) {
+  if(player1.x < player2.x + player2.width &&
+    player1.x + player1.width > player2.x &&
+    player1.y < player2.y + player2.height &&
+    player1.y + player1.height > player2.y) {
+      return true
+  }
+  else {
+   return false 
+  }
+}
+
 //Define wallBounce
 function wallBounce() {
-  if (enemy.x < 0) {
+  // and = &&    or = ||
+  if (enemy.x  < 0 + enemy.width / 2 || enemy.x > width - enemy.width / 2) {
       enemy.vx = -enemy.vx
+  }
+  if(enemy.y > width - enemy.width / 2|| enemy.y < 0 + enemy.width / 2){
+    enemy.vy = -enemy.vy
   }
   
 }
