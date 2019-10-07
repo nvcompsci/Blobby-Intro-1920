@@ -9,7 +9,8 @@ let player = {
   height: 30,
   speed: 5,
   vx: 0,
-  vy: 0
+  vy: 0,
+  hp: 100
 }
 
 let enemy = {
@@ -24,7 +25,7 @@ let enemy = {
 
 function setup() {
   createCanvas(400, 400);
-  frameRate(100)
+  frameRate(24)
 }
 
 function draw() {
@@ -60,11 +61,29 @@ function draw() {
   enemy.y += enemy.vy
   
   if (collide(player,enemy) == true) {
-    console.log( "hit" )
+    console.log(player.hp )
+    /*tempVx = enemy.vx
+    tempVy = enemy.vy
+    enemy.vx = -player.vx
+    enemy.vy = -player.vy
+    player.vx = -tempVx
+    player.vy = -tempVy*/
+    
+    player.hp -= 20
+    if (player.hp <= 0) {
+        text("Game Over!",width/2, height/2)
+        noLoop()
+    }
   }
   
   //call wallBounce()
   wallBounce()
+}
+
+function fireLaser() {
+  laser = {
+    
+  }
 }
 
 function collide(player1, player2) {
