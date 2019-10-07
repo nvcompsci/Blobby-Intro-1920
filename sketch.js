@@ -23,6 +23,9 @@ let enemy = {
   vy: 5
 }
 
+//Create lasers array
+let lasers = []
+
 function setup() {
   createCanvas(400, 400);
   frameRate(24)
@@ -33,6 +36,27 @@ function draw() {
   stroke("red")
   fill("blue")
   rect(player.x, player.y, player.width, player.height)
+  
+  //Loop through lasers array
+  for (let i = 0; i < lasers.length; i++) {
+    //Temporarily name each laser
+    let laser = lasers[i]
+    
+    //Make laser move
+    laser.x += laser.vx
+    
+    //Change color to laser.color and draw
+    fill(laser.color)
+    rect(laser.x, laser.y, laser.width, laser.height)
+    
+    if (collide(laser, enemy) == true) {
+        //declare enemy is dead
+        enemy.alive = false
+      
+        //kill laser / remove from array
+        lasers.splice(i,1)
+    }
+  }
   
   if (enemy.x > 335) {
      fill("red") 
@@ -81,9 +105,18 @@ function draw() {
 }
 
 function fireLaser() {
-  laser = {
-    
+  //Create one new laser
+  let laser = {
+    x: player.x,
+    y: player.y,
+    vx: 3,
+    vy: 0,
+    width: 10,
+    height: 4,
+    color: "red"
   }
+  //Add newest laser to lasers array
+  lasers.push(laser)
 }
 
 function collide(player1, player2) {
@@ -111,6 +144,11 @@ function wallBounce() {
 }
 
 function keyPressed() {
+  //Create new laser with SPACEBAR
+  if (keyCode === 32) {
+   fireLaser() 
+  }
+  
   if (keyCode === RIGHT_ARROW) {
     player.vx = player.speed
   }
