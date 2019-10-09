@@ -20,7 +20,8 @@ let enemy = {
   height: 50,
   speed: 5,
   vx: -7,
-  vy: 5
+  vy: 5,
+  alive: true
 }
 
 //Create lasers array
@@ -77,14 +78,17 @@ function draw() {
   else {
     fill("purple")
   }
-    
+  
+  if (enemy.alive == true) {
   circle(enemy.x, enemy.y, enemy.width)
+    enemy.x += enemy.vx
+  enemy.y += enemy.vy
+}
   player.x += player.vx
   player.y += player.vy
-  enemy.x += enemy.vx
-  enemy.y += enemy.vy
   
-  if (collide(player,enemy) == true) {
+  
+  if (enemy.alive && collide(player,enemy) == true) {
     console.log(player.hp )
     /*tempVx = enemy.vx
     tempVy = enemy.vy
@@ -107,8 +111,8 @@ function draw() {
 function fireLaser() {
   //Create one new laser
   let laser = {
-    x: player.x,
-    y: player.y,
+    x: player.x+player.width,
+    y: player.y+player.height/2,
     vx: 3,
     vy: 0,
     width: 10,
